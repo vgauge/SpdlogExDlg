@@ -31,6 +31,7 @@ void CSpdlogExDlgDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSpdlogExDlgDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BTN_BASIC_LOGGER, &CSpdlogExDlgDlg::OnBnClickedBtnBasicLogger)
 END_MESSAGE_MAP()
 
 
@@ -45,7 +46,8 @@ BOOL CSpdlogExDlgDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
+	//spdlog #3
+	m_logger = spdlog::basic_logger_mt("basic_logger", "log/basic-log.txt");
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -86,3 +88,21 @@ HCURSOR CSpdlogExDlgDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CSpdlogExDlgDlg::OnBnClickedBtnBasicLogger()
+{
+	//spdlog #4
+	m_logger->info("test");
+	m_logger->error("error {}", 1234);
+	m_logger->warn("Easy padding in numbers like {:08d}", 12);
+	m_logger->critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
+	m_logger->info("Support for floats {:03.2f}", 1.23456);
+	m_logger->info("Positional args are {1} {0}..", "too", "supported");
+	m_logger->info("{:<30}", "left aligned");
+	m_logger->set_level(spdlog::level::trace); // Set global log level to debug
+	m_logger->trace("This message should be displayed..");
+	m_logger->info("Function name is {}", __FUNCTION__);
+
+	if (m_logger)	m_logger->flush();
+}

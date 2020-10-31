@@ -3,7 +3,8 @@
 //
 
 #pragma once
-
+//spdlog #1
+#include <spdlog/sinks/basic_file_sink.h> 
 
 // CSpdlogExDlgDlg dialog
 class CSpdlogExDlgDlg : public CDialogEx
@@ -30,4 +31,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+	
+	//spdlog #2
+	std::shared_ptr<spdlog::logger> m_logger;
+public:
+	afx_msg void OnBnClickedBtnBasicLogger();
 };
